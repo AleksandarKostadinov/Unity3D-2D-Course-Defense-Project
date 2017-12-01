@@ -24,11 +24,11 @@ public class BourdManager : MonoBehaviour
     {
         this.BourdSetup();
         this.InitListPositions();
-        LayoutObjectAtRandom(this.wallTiles, this.wallCount.Minimum, this.wallCount.Maximum);
-        LayoutObjectAtRandom(this.foodTiles, this.foodCount.Minimum, this.foodCount.Maximum);
+        this.LayoutObjectAtRandom(this.wallTiles, this.wallCount.Minimum, this.wallCount.Maximum);
+        this.LayoutObjectAtRandom(this.foodTiles, this.foodCount.Minimum, this.foodCount.Maximum);
 
         int enemyCount = (int) Mathf.Log(level, 2f);
-        LayoutObjectAtRandom(this.enemyTiles, enemyCount, enemyCount);
+        this.LayoutObjectAtRandom(this.enemyTiles, enemyCount, enemyCount);
 
         Instantiate(this.exit, new Vector3(this.columns - 1, this.rows - 1, 0f), Quaternion.identity);
     }
@@ -42,7 +42,7 @@ public class BourdManager : MonoBehaviour
             for (int y = -1; y < this.rows + 1; y++)
             {
                 GameObject toInstantiat = this.floorTiles[Random.Range(0, this.floorTiles.Length)];
-                if (InOuterWalls(x, y))
+                if (this.InOuterWalls(x, y))
                 {
                     toInstantiat = this.wallTiles[Random.Range(0, this.wallTiles.Length)];
                 }
