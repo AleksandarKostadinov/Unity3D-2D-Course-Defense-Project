@@ -5,10 +5,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public BourdManager bourdScript;
+    public int playerFoodPoints = 100;
+
+    [HideInInspector] public bool playersTurn = true;
+
 
     private int level = 4;
-
-    // Use this for initialization
+    
     public void Awake()
     {
         if (instance == null)
@@ -27,6 +30,11 @@ public class GameManager : MonoBehaviour
     private void InitGame()
     {
         this.bourdScript.SetupScene(this.level);
+    }
+
+    public void GameOver()
+    {
+        this.enabled = false;
     }
 
     // Update is called once per frame
