@@ -44,7 +44,7 @@ public abstract class MovingObject : MonoBehaviour
         this.boxCollider.enabled = true;
 
         //Check if anything was hit
-        if (hit.transform != null)
+        if (hit.transform == null)
         {
             //If nothing was hit, start SmoothMovement co-routine passing in the Vector2 end as destination
             this.StartCoroutine(this.SmoothMovement(end));
