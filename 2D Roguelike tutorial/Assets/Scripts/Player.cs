@@ -1,5 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;          //Allows us to use SceneManager
+﻿using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+//Allows us to use SceneManager
 
 
 //Player inherits from MovingObject, our base class for objects that can move, Enemy also inherits from this.
@@ -9,6 +13,7 @@ public class Player : MovingObject
     public int pointsPerFood = 10;              //Number of points to add to player food points when picking up a food object.
     public int pointsPerSoda = 20;              //Number of points to add to player food points when picking up a soda object.
     public float reastartLevelDelay = 1f;       //Delay time in seconds to restart level.
+    public Text foodtext;
 
     private Animator animator;                  //Used to store a reference to the Player's animator component.
     private int food;                           //Used to store player food points total during level.
@@ -18,6 +23,8 @@ public class Player : MovingObject
     {
         //Get a component reference to the Player's animator component
         this.animator = this.GetComponent<Animator>();
+
+        this.foodtext.text = "Food " + this.food;
 
         //Get the current food point total stored in GameManager.instance between levels.
         this.food = GameManager.instance.playerFoodPoints;
@@ -75,6 +82,8 @@ public class Player : MovingObject
         //That is a game mechanism in RogueLike.
         this.food--;
 
+        this.foodtext.text = "Food " + this.food;
+
         //Call the AttemptMove method of the base class, passing in the component T (in this case Wall) and x and y direction to move.
         base.AttemptMove<T>(xDir, yDir);
 
@@ -127,6 +136,8 @@ public class Player : MovingObject
             //Add pointsPerFood to the players current food total.
             this.food += this.pointsPerFood;
 
+            this.foodtext.text = String.Format("+ {0} Food: {1}", this.pointsPerFood, this.food);
+
             //Disable the food object the player collided with.
             other.gameObject.SetActive(false);
         }
@@ -136,6 +147,8 @@ public class Player : MovingObject
         {
             //Add pointsPerSoda to players food points total
             this.food += this.pointsPerSoda;
+
+            this.foodtext.text = String.Format("+ {0} Food: {1}", this.pointsPerSoda, this.food);
 
             //Disable the soda object the player collided with.
             other.gameObject.SetActive(false);
@@ -158,6 +171,8 @@ public class Player : MovingObject
 
         //Subtract lost food points from the players total.
         this.food -= loss;
+
+        this.foodtext.text = String.Format("- {0} Food: {1}", loss, this.food);
 
         //Check to see if game has ended.
         this.CheckIfGameOver();
